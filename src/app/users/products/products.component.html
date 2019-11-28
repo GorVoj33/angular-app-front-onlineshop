@@ -1,0 +1,57 @@
+<app-header pageTitle="Shop" iconTitle="shopping_cart" helpTitle="Shop page"></app-header>
+<!-- Products:
+<div *ngFor="let i of members">
+    <p>{{i.name}}</p>
+</div> -->
+<mat-card>
+    <mat-card-actions align="start">
+        <form #searchForm="ngForm">
+        
+             <mat-form-field class="example-form">
+                <input matInput type="text" placeholder="Search . . ." #search="ngModel" ngModel id="search" name="search" minlength="3">
+
+             </mat-form-field>
+            <span matTooltip="Search all">
+                <mat-icon color="primary" (click)="this.searchForm.reset();">clear</mat-icon>
+            </span>
+            <span class="small-spacer"></span>
+            <span matTooltip="Search all">
+            <mat-icon color="primary" (click)="getProductsByFilter(search.value);">search</mat-icon>
+            </span>
+        </form>
+    </mat-card-actions>
+    <mat-card-content *ngIf="toggle else showProductDetails">
+        Products:
+            <mat-list>
+                    <!-- <mat-list-item *ngFor="let i of members | async" (click)="showDetails(i);toggle=!toggle"> -->
+                    
+                    <mat-list-item *ngFor="let i of members" (click)="showDetails(i);toggle=!toggle">
+                        <h4 mat-line>{{i.name}} ->{{i.price}}
+                            <mat-icon mat-list-icon>pageview</mat-icon>
+                        </h4>
+                        <p class="label-hint" mat-line>{{i.category.name}}</p>
+                    </mat-list-item>
+            </mat-list>
+           
+    </mat-card-content>
+    <ng-template #showProductDetails>
+            <mat-icon mat-list-icon (click)="toggle=!toggle">close</mat-icon>
+            <p>{{object.name}}</p>
+            Cena: {{object.price}} eur.
+            Katerogija: {{object.category.name}}
+            <mat-error *ngIf="saved">
+                <p>Shopping cart updated.</p>
+                <mat-icon (click)="saved=!saved">close</mat-icon>
+            </mat-error>
+            <mat-icon (click)="count('remove')" color="primary">remove</mat-icon>
+            {{counter}}    
+            <mat-icon (click)="count('add')" color="primary">add</mat-icon>
+            <span class="med-spacer"></span>
+            <button [disabled]="counter < 1" mat-raised-button color="primary" (click)="addToCart(object, counter)">Add to cart</button>
+            
+            <br/>
+            <img src="" width="300" height="200" />
+    
+            
+    </ng-template>
+</mat-card>

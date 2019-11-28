@@ -1,0 +1,35 @@
+<mat-toolbar>
+    <button mat-mini-fab color="warn" [matMenuTriggerFor]="navMenu">
+        <mat-icon>dashboard</mat-icon>
+    </button>
+    <mat-menu #navMenu="matMenu">
+        
+            <button mat-menu-item><mat-icon svgIcon="facebook">fb</mat-icon></button>
+            <button mat-menu-item><mat-icon svgIcon="github">git</mat-icon></button>
+            <button mat-menu-item routerLink="/about-us">about us</button>
+            <button mat-menu-item routerLink="/settings">settings</button>
+            <button mat-menu-item routerLink="/admin">Admin area</button>
+    </mat-menu>
+    <span class="example-icon"></span>
+    <mat-icon>home</mat-icon>
+    <span class="example-icon"></span>
+    {{pageTitle}}
+    <span class="example-spacer"></span>
+    <mat-icon [color]="userStatusColor" routerLink="/products">shop</mat-icon>
+    <span class="example-spacer"></span>
+    <mat-icon [color]="userStatusColor" routerLink="/settings">account_box</mat-icon>
+    <span class="example-icon"></span>
+    <mat-icon matBadge="{{counter}}" matBadgePosition="before" matBadgeColor="accent">shopping_cart</mat-icon>
+    <span class="example-icon"></span>
+    <mat-icon [matMenuTriggerFor]="helpMenu">help</mat-icon>
+    <span class="example-icon"></span>
+    <mat-icon>settings</mat-icon>
+    
+    <mat-menu #helpMenu="matMenu">
+        This is about us page.
+        {{helpTitle}}
+    </mat-menu>
+
+</mat-toolbar> 
+
+
