@@ -1,1 +1,71 @@
-<p>orders works!</p>
+<app-header pageTitle="Create order" iconTitle="home" helpTitle="You are almost done. :) Please enter valid data."></app-header>
+<div *ngIf="dataLoading">
+    <mat-progress-spinner mode="indeterminate" [attr.color]="primary" [value]="15"></mat-progress-spinner>
+</div>
+<mat-horizontal-stepper [linear]="isLinear" #stepper>
+        <mat-step [stepControl]="firstFormGroup">
+          <form #firstFormGroup="ngForm">
+            <ng-template matStepLabel>Fill out your address</ng-template>
+            <mat-form-field>
+              <input matInput placeholder="Enter city's name" name="city" ngModel #city="ngModel" required> 
+            </mat-form-field><br>
+            <mat-form-field>
+                <input matInput placeholder="Enter your address" name="address" ngModel #address="ngModel" required>
+            </mat-form-field><br>
+            <mat-form-field>
+                <input matInput placeholder="Contact phone" name="phone" ngModel #phone="ngModel" required>
+                <mat-icon matSuffix>phone</mat-icon>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperNext (click)="populateAddress(firstFormGroup)">Next</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="secondFormGroup">
+          <form #secondFormGroup="ngForm">
+            <ng-template matStepLabel>Choose payment method</ng-template>
+            <mat-radio-group
+            aria-labelledby="example-radio-group-label"
+            class="example-radio-group"
+            [(ngModel)]="method" name="payment-method">
+            <mat-radio-button class="example-radio-button" *ngFor="let mtd of all_methods" [value]="mtd">
+              {{mtd}}<br>
+            </mat-radio-button>
+             </mat-radio-group>
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Finalize order</ng-template>
+          <hr>
+          Name: <b>{{user.name}}</b> <br>
+          Email: <b>{{user.email}}</b>
+          <hr>
+          Contact: {{adresa.contact}}<br>
+          Address: {{adresa.address}}<br>
+          City: {{adresa.city}}<br>
+          <hr>
+          Payment method: {{method}}
+          <hr>
+          <div class="list-item" *ngFor="let i of user.cart.items">
+              Product name: {{i.product.name}} * (Quantity = {{i.countProducts}}) = {{i.total}} RSD.
+          </div>
+          <hr>
+          <b>Total: {{user.cart.total}} RSD.</b>
+          <hr>
+          Click 'Order' to confirm your order.
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+            <button mat-button (click)="finalize()" color="primary">Order</button>
+          </div>
+        </mat-step>
+      </mat-horizontal-stepper>
+<div *ngIf="orderSaved" style="font-size: 25px; color:red;">
+    Your order has been saved.
+</div>
+
+<app-footer></app-footer>

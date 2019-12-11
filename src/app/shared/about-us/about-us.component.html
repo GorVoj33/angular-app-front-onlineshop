@@ -1,17 +1,146 @@
 <app-header pageTitle="About us"></app-header>
-<!--<mat-card [@fallIn]='state'>
-    <mat-card-title>
-        O nama page title
-    </mat-card-title>
-    <mat-card-content>
-        <button routerLink="/settings">Settings</button>
-        
-        <br/>
-        <p>o nama works!</p>
-    </mat-card-content>
-    </mat-card> -->
 <mat-tab-group>
-            <mat-tab label="First"> Content 1 </mat-tab>
-            <mat-tab label="Second"> Content 2 </mat-tab>
-            <mat-tab label="Third"> Content 3 </mat-tab>
+            <mat-tab label="More about us"> 
+                
+                <section id="three" class="wrapper">
+						<div class="spotlight">
+							<div class="image flush"><img src="assets/images/categoryChairs.jpg" alt="" /></div>
+							<div class="inner">
+								<h3>Chairs</h3>
+								<p class="description-text">
+                                        One of the basic pieces of furniture, a chair is a type of seat. Its primary features are two pieces of a durable material, attached as back and seat to one another at a 90° or slightly greater angle, with usually the four corners of the horizontal seat attached in turn to four legs—or other parts of the seat's underside attached to three legs or to a shaft about which a four-arm turnstile on rollers can turn—strong enough to support the weight of a person who sits on the seat (usually wide and broad enough to hold the lower body from the buttocks almost to the knees) and leans against the vertical back (usually high and wide enough to support the back to the shoulder blades).
+                                    <br><button class="btn-collection" mat-raised-button color="primary" (click)="displayProductsByCategory(5);">See collection</button>
+                                </p>
+							</div>
+						</div>
+						<div class="spotlight alt">
+							<div class="image flush"><img src="assets/images/category2.jpg" alt="" /></div>
+							<div  class="inner">
+								<h3>Beds</h3>
+								<p class="description-text">Curabitur eget semper ante. Morbi eleifend ultricies est, a blandit diam vehicula vel. Vestibulum porttitor nisi quis viverra hendrerit. Suspendisse vel volutpat nibh, vel elementum lacus. Maecenas commodo pulvinar dui, at cursus metus imperdiet vel.
+                                    <br><button mat-raised-button class="btn-collection" color="primary" (click)="displayProductsByCategory(4);">See collection</button>
+                                </p>
+							</div>
+						</div>
+						<div class="spotlight">
+							<div class="image flush"><img src="assets/images/category3.jpg" alt="" /></div>
+							<div class="inner">
+								<h3>Rooms</h3>
+								<p class="description-text">Curabitur eget semper ante. Morbi eleifend ultricies est, a blandit diam vehicula vel. Vestibulum porttitor nisi quis viverra hendrerit. Suspendisse vel volutpat nibh, vel elementum lacus. Maecenas commodo pulvinar dui, at cursus metus imperdiet vel.
+                                    <br><button mat-raised-button class="btn-collection" color="primary" (click)="displayProductsByCategory(3);">See collection</button>
+                                </p>
+							</div>
+						</div>
+					</section>
+                <!-- <mat-grid-list cols="2" rowHeight="2:1">
+                    <mat-grid-tile><img src="assets/images/cat1.jpg"/>1</mat-grid-tile>
+                    <mat-grid-tile>2</mat-grid-tile>
+                    <mat-grid-tile>3</mat-grid-tile>
+                    <mat-grid-tile>4</mat-grid-tile>
+                </mat-grid-list> -->
+            </mat-tab>
+            <mat-tab label="Contact">
+                    
+                    
+                        <!-- <div class="bg-contact2" style="background-image: url('images/bg-01.jpg');"> -->
+                            <div class="bg-contact2">
+                            <div class="container-contact2">
+                                <div class="wrap-contact2">
+                                    <form class="contact2-form validate-form" #contactUsForm="ngForm" (ngSubmit)="sendMessage(contactUsForm)">
+                                        <span class="contact2-form-title">
+                                            Contact Us
+                                        </span>
+                    
+                                        <div class="wrap-input2 validate-input" data-validate="Name is required">
+                                            <input matInput class="input2" type="text" name="name" #name="ngModel" ngModel required>
+                                            <span class="focus-input2" data-placeholder="NAME"></span>
+                                        </div>
+                    
+                                        <div class="wrap-input2 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+                                            <input matInput class="input2" type="text" name="email" #email="ngModel" ngModel required email>
+                                            <span class="focus-input2" data-placeholder="EMAIL"></span>
+                                        </div>
+
+                                        <!-- <mat-form-field class="example-full-width">
+                                                <input matInput placeholder="Enter your full name" name="name" #name="ngModel" ngModel required>
+                                          </mat-form-field> -->
+                    
+                                        <div class="wrap-input2 validate-input" data-validate = "Message is required">
+                                            <textarea matInput class="input2" name="message" #message="ngModel" ngModel required></textarea>
+                                            <span class="focus-input2" data-placeholder="MESSAGE"></span>
+                                        </div>
+                    
+                                        <div class="container-contact2-form-btn">
+                                            <div class="wrap-contact2-form-btn">
+                                                <div class="contact2-form-bgbtn"></div>
+                                                <button class="contact2-form-btn" type="submit">
+                                                    Send Your Message
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    
+                        <div *ngIf="messageSaved">
+                                <p class="description-text">Your message has been successfuly sent.</p>
+                            </div>
+                            <mat-error *ngIf="error">
+                                Error! {{errorMessage}}
+                            </mat-error>
+                    
+
+                    
+                   
+                    
+
+
+            </mat-tab>
+            <!-- <mat-tab label="Third"> Content 3 </mat-tab> -->
 </mat-tab-group>
+
+<app-footer></app-footer>
+
+<script>
+
+(function($) {
+
+skel.breakpoints({
+    xlarge: '(max-width: 1680px)',
+    large: '(max-width: 1280px)',
+    medium: '(max-width: 980px)',
+    small: '(max-width: 736px)',
+    xsmall: '(max-width: 480px)'
+});
+
+$(function() {
+
+    var	$window 	= $(window),
+        $body 		= $('body'),
+        $header 	= $('#header');
+
+    // Disable animations/transitions until the page has loaded.
+        $body.addClass('is-loading');
+
+        $window.on('load', function() {
+            window.setTimeout(function() {
+                $body.removeClass('is-loading');
+            }, 100);
+        });
+
+    // Prioritize "important" elements on medium.
+        skel.on('+medium -medium', function() {
+            $.prioritize(
+                '.important\\28 medium\\29',
+                skel.breakpoint('medium').active
+            );
+        });
+
+    // Gallery.
+        $('.gallery').poptrox();
+
+});
+
+})(jQuery);</script>

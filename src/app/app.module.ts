@@ -9,7 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { CustommaterialModule } from './custommaterial.module';
 import { SettingsComponent } from './settings/settings.component';
 import { MatToolbarModule } from '@angular/material';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SetproductComponent } from './admin/setproduct/setproduct.component';
 
@@ -22,8 +22,8 @@ import { UsersComponent } from './users/users/users.component';
 import { OrdersComponent } from './users/orders/orders.component';
 import { CartsComponent } from './users/carts/carts.component';
 import { ProductsComponent } from './users/products/products.component';
-
-
+import {MatSelectModule} from '@angular/material/select';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { MatButtonModule } from '@angular/material/button';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
@@ -32,6 +32,12 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 import { LoginComponent } from './shared/login/login.component';
 import { RegisterComponent } from './shared/register/register.component';
+import { AuthenticationService } from './services/authentication.service';
+import { HttpInterceptorService } from './services/http-interceptor.service';
+import { CartItemComponent } from './users/carts/cart-item/cart-item.component';
+import { AuthGlobalService } from './services/auth-global.service';
+import { AuthAdminService } from './services/auth-admin.service';
+import { AdminMessagesComponent } from './admin/admin-messages/admin-messages.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +55,9 @@ import { RegisterComponent } from './shared/register/register.component';
     CartsComponent,
     ProductsComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    CartItemComponent,
+    AdminMessagesComponent
   ],
   imports: [
     BrowserModule,
@@ -64,9 +72,15 @@ import { RegisterComponent } from './shared/register/register.component';
     AngularFireModule.initializeApp(environment.firebaseConfig, 'e-commerce-web-app'),
     AngularFirestoreModule,
     AngularFireStorageModule,
-    AngularFireAuthModule,       
+    AngularFireAuthModule, 
+    MatSelectModule,
+    AngularFontAwesomeModule    
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass : HttpInterceptorService, multi: true},
+    AuthGlobalService,
+    AuthAdminService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

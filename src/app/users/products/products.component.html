@@ -1,12 +1,17 @@
-<app-header pageTitle="Shop" iconTitle="shopping_cart" helpTitle="Shop page"></app-header>
+<app-header pageTitle="Shop" iconTitle="shopping_cart" helpTitle="Select product to display more informations about it and then you can add that product to shopping cart."></app-header>
 <!-- Products:
 <div *ngFor="let i of members">
     <p>{{i.name}}</p>
 </div> -->
+<div *ngIf="dataLoading">
+        <mat-progress-spinner mode="indeterminate" [attr.color]="primary" [value]="15"></mat-progress-spinner>
+ </div>
 <mat-card>
     <mat-card-actions align="start">
         <form #searchForm="ngForm">
-        
+            <mat-error *ngIf="noProductFounded">
+                No products found by search criteria.
+            </mat-error>
              <mat-form-field class="example-form">
                 <input matInput type="text" placeholder="Search . . ." #search="ngModel" ngModel id="search" name="search" minlength="3">
 
@@ -22,36 +27,50 @@
     </mat-card-actions>
     <mat-card-content *ngIf="toggle else showProductDetails">
         Products:
-            <mat-list>
-                    <!-- <mat-list-item *ngFor="let i of members | async" (click)="showDetails(i);toggle=!toggle"> -->
-                    
+            <mat-list> 
                     <mat-list-item *ngFor="let i of members" (click)="showDetails(i);toggle=!toggle">
-                        <h4 mat-line>{{i.name}} ->{{i.price}}
+                        <p class="product-header" mat-line>Name: {{i.name}} (price: {{i.price}} RSD.)
                             <mat-icon mat-list-icon>pageview</mat-icon>
-                        </h4>
-                        <p class="label-hint" mat-line>{{i.category.name}}</p>
+                        </p>
+                        <p class="label-hint" mat-line (click)="onSelect(i.category.id)"> category: <i>{{i.category.name}}
+                            <mat-icon>zoom_in</mat-icon>
+                        </i></p>
                     </mat-list-item>
             </mat-list>
-           
     </mat-card-content>
     <ng-template #showProductDetails>
-            <mat-icon mat-list-icon (click)="toggle=!toggle">close</mat-icon>
-            <p>{{object.name}}</p>
-            Cena: {{object.price}} eur.
-            Katerogija: {{object.category.name}}
+        <div class="wrapper-detail">
+            <b><mat-icon mat-list-icon (click)="toggle=!toggle">close</mat-icon></b>
+            <div class="center-text">
+                <div class="title">{{object.name}}</div>
+            <div class="other-info">
+                    <p (click)="onSelect(object.category.id)"><b>Category:</b> <i style="color: blue">{{object.category.name}}</i> </p><br>
+                <b>Description:</b> {{object.description}}<br>
+                <b>Units in stock:</b> {{object.unitsInStock}}<br>
+                <br>
+            </div>
+            <div id="price">
+                <b>Price:</b> {{object.price}} RSD.
+            </div>
             <mat-error *ngIf="saved">
                 <p>Shopping cart updated.</p>
                 <mat-icon (click)="saved=!saved">close</mat-icon>
             </mat-error>
-            <mat-icon (click)="count('remove')" color="primary">remove</mat-icon>
-            {{counter}}    
-            <mat-icon (click)="count('add')" color="primary">add</mat-icon>
-            <span class="med-spacer"></span>
-            <button [disabled]="counter < 1" mat-raised-button color="primary" (click)="addToCart(object, counter)">Add to cart</button>
-            
+            <div *ngIf="object.unitsInStock>0">
+                <br>Quantity:
+                <mat-icon (click)="count('remove')" color="primary" *ngIf="counter > 1">remove</mat-icon>
+                <b>{{counter}}</b>    
+                <mat-icon (click)="count('add')" color="primary" *ngIf="counter < totalInStockForSelectedProduct">add</mat-icon>
+                <span class="med-spacer"></span>
+                <button [disabled]="counter < 1" mat-raised-button color="primary" style="margin-left: 10px;" (click)="addToCart(object, counter)">
+                    Add to cart
+                </button>
+            </div>
+            <p *ngIf="!userLoggedIn" routerLink="['/register']" class="no-user-info">Hi, guest. Please register. Registration process is very easy. </p>
             <br/>
-            <img src="" width="300" height="200" />
-    
-            
+            <img src='assets/images/products/{{object.id}}.jpg' width="350" height="300" />
+            </div>
+        </div>   
     </ng-template>
 </mat-card>
+<!-- <app-footer></app-footer> -->

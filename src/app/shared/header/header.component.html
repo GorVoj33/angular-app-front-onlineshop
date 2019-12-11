@@ -4,32 +4,35 @@
     </button>
     <mat-menu #navMenu="matMenu">
         
-            <button mat-menu-item><mat-icon svgIcon="facebook">fb</mat-icon></button>
-            <button mat-menu-item><mat-icon svgIcon="github">git</mat-icon></button>
-            <button mat-menu-item routerLink="/about-us">about us</button>
-            <button mat-menu-item routerLink="/settings">settings</button>
-            <button mat-menu-item routerLink="/admin">Admin area</button>
+            <button mat-menu-item><mat-icon svgIcon="facebook">fb</mat-icon>Link to fb page</button>
+            <button mat-menu-item><mat-icon svgIcon="github">git</mat-icon> Link to github page</button>
+            <!-- <button mat-menu-item routerLink="/about-us">about us</button> -->
+            <button mat-menu-item routerLink="/admin" *ngIf="adminLoggedIn">Admin area</button>
     </mat-menu>
     <span class="example-icon"></span>
-    <mat-icon>home</mat-icon>
+    <mat-icon routerLink="/about-us">home</mat-icon>
     <span class="example-icon"></span>
     {{pageTitle}}
     <span class="example-spacer"></span>
     <mat-icon [color]="userStatusColor" routerLink="/products">shop</mat-icon>
-    <span class="example-spacer"></span>
-    <mat-icon [color]="userStatusColor" routerLink="/settings">account_box</mat-icon>
+    
     <span class="example-icon"></span>
-    <mat-icon matBadge="{{counter}}" matBadgePosition="before" matBadgeColor="accent">shopping_cart</mat-icon>
+    
+    <mat-icon [color]="userStatusColor" routerLink="/user-profile-settings" *ngIf="userLoggedIn">account_box</mat-icon>
+    <span class="example-icon"></span>
+    <mat-icon matBadge="{{counter}}" matBadgePosition="before" matBadgeColor="accent" routerLink="/cart">shopping_cart</mat-icon>
     <span class="example-icon"></span>
     <mat-icon [matMenuTriggerFor]="helpMenu">help</mat-icon>
     <span class="example-icon"></span>
-    <mat-icon>settings</mat-icon>
-    
+    <!-- <mat-icon>settings</mat-icon>
+    <span class="example-icon"></span> -->
+    <button mat-raised-button color="warn" *ngIf="userLoggedIn" (click)="logout()">Logout</button>
+    <button mat-raised-button color="primary" *ngIf="!userLoggedIn" (click)="goToLogin()">Login</button>
     <mat-menu #helpMenu="matMenu">
-        This is about us page.
+        INFO: 
         {{helpTitle}}
     </mat-menu>
-
+    
 </mat-toolbar> 
 
 

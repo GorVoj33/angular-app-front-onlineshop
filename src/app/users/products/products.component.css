@@ -1,0 +1,46 @@
+.wrapper-detail{
+    border: 1px solid lightslategray;
+    margin-left: 15px;
+    
+}
+.center-text{
+    position:center;
+    text-align: center;
+    
+}
+.title{
+    font-size: 36px;
+}
+.other-info {
+    padding-top: 24px;
+    padding-bottom: 12px;
+    font-size: 16 px;
+    font-family: "Times New Roman", Times, serif;
+}
+#price {
+    font-size: 33px;
+    
+}
+
+.product-header{
+    
+    font-weight: bold;
+    font-size: 42px;
+    color: black;
+}
+.label-hint{
+    float: right;
+    color: blue;
+    margin-bottom: 20px;
+    
+}
+.mat-list-icon {
+    color: rgba(0, 0, 0, 0.54);
+  }
+.primary-hr{
+    color: grey;
+}
+.no-user-info{
+    color: blue;
+
+}

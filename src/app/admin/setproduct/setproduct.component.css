@@ -10,4 +10,27 @@ table {
   td, th {
     width: 25%;
   }
-  
+  .red-icon {
+    color: red;
+}
+/* Note: If you're using an SVG icon, you should make the class target the `<svg>` element */
+.red-icon svg {
+    fill: red;
+}
+
+.green-icon {
+  color: green;
+}
+/* Note: If you're using an SVG icon, you should make the class target the `<svg>` element */
+.green-icon svg {
+  fill: green;
+}
+.category-create{
+  margin-bottom: 15px;
+  /* border: 1px solid black; */
+  text-align: center;
+}
+.description-text{
+  font-size: 19px;
+  color:red;
+}

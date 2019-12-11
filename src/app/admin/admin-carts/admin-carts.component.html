@@ -1,1 +1,64 @@
-<p>admin-carts works!</p>
+<mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
+<div class="example-container mat-elevation-z8">
+        <mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+            </ng-container>
+            <!-- <ng-container matColumnDef="customer">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Customer's name</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.user.name}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="email">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Customer's email</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.user.email}}</mat-cell>
+            </ng-container> -->
+            <ng-container matColumnDef="total">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Total</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.total}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="number">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Number of items</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.itemsNumber}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="action">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> <button mat-raised-button color="primary" (click)="displayDetails(row);detailsDisplayed=!detailsDisplayed;">Details</button> </mat-cell>
+            </ng-container>
+       
+    
+  
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+  </mat-table>
+    <!-- <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
+</div>
+<div *ngIf="!detailsDisplayed else showOrderDetails">Click on 'Details' to display cart's details.</div>
+<ng-template #showOrderDetails>
+  <!-- detalji -->
+    <div class="wrapper-detail" style="margin-bottom: 30px;">
+        <b><mat-icon mat-list-icon (click)="detailsDisplayed=!detailsDisplayed">close</mat-icon></b>
+        <div class="center-text">
+            <div class="title">ID: {{selectedCart.id}}</div>
+            <!-- <div class="title">Date: {{selectedCart.date}}</div> -->
+            <hr>
+            <!-- <div class="title">Customer name: {{selectedCart.user.name}}</div>
+            <div class="title">Email: {{selectedCart.user.email}}</div> -->
+        <div class="other-info">
+            
+            <hr>
+            <b>Items: </b>
+            <div *ngFor="let i of selectedCart.items">
+                Product: {{i.product.name}} (Product ID: {{i.product.id}})<br>
+                Quantity: {{i.countProducts}}<br>
+                Total for item: {{i.total}}
+                <hr>
+            </div>
+            <b>Total: {{selectedCart.total}}</b><br>
+        </div>          
+        </div>
+    </div>   
+</ng-template>

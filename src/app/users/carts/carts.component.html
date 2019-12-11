@@ -1,1 +1,74 @@
-<p>carts works!</p>
+<app-header pageTitle="Your shopping cart" iconTitle="shopping_cart" helpTitle="Select product to display more informations about it and then you can add that product to shopping cart."></app-header>
+<!-- All items: Name
+<mat-list role="list">
+        <mat-list-item role="listitem" *ngFor="let i of cart.getItems()">{{ i.product.name }}<span class="tab">{{i.total}}</span><mat-divider></mat-divider></mat-list-item>
+        
+</mat-list> -->
+<div *ngIf="elementDeleted">
+    Selected item has been successfuly removed from your card.
+</div>
+<mat-error class="error" *ngIf="cart.items.length===0">
+    Your shopping cart is empty.
+</mat-error>
+<div *ngIf="dataLoading">
+    <mat-progress-spinner mode="indeterminate" [attr.color]="primary" [value]="15"></mat-progress-spinner>
+ </div>   
+<div *ngIf="cart.items.length>0" style="margin-bottom: 90px;">
+ 
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+      
+        <!-- Position Column -->
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef class="title-color">Product image </th>
+          <td mat-cell *matCellDef="let element"> <img src="assets/images/products/{{element.product.id}}.jpg" width="120" height="90" /> </td>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="product-name">
+          <th mat-header-cell *matHeaderCellDef class="title-color"> Product name </th>
+          <td mat-cell *matCellDef="let element"> {{element.product.name}} </td>
+        </ng-container>
+      
+        <!-- Weight Column -->
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef class="title-color"> Product price </th>
+          <td mat-cell *matCellDef="let element"> {{element.product.price}} RSD. </td>
+        </ng-container>
+      
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef class="title-color"> Quantity </th>
+          <td mat-cell *matCellDef="let element"> {{element.countProducts}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total-item" >
+                <th mat-header-cell *matHeaderCellDef class="title-color"> Total price for item </th>
+                <td mat-cell *matCellDef="let element"> <b>{{element.total}} RSD.</b> </td>
+        </ng-container>
+        <!-- <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef class="title-color"> Item id </th>
+                <td mat-cell *matCellDef="let element"> {{element.itemId}} </td>
+        </ng-container> -->
+        <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef class="title-color"> Action </th>
+                <td mat-cell *matCellDef="let element"> <button mat-fab color="warn" (click)="deleteItem(element.itemId)">
+                        <span matTooltip="Delete this item">
+                            <mat-icon>delete</mat-icon>
+                        </span></button> </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+<div id="total">
+  Total: {{cart.total}} RSD.
+</div>
+
+
+  <button mat-raised-button  color="warn" style="float: left;left: 10px;top: 10px;" routerLink="/products">BACK TO PRODUCTS</button>
+  <button mat-raised-button  color="primary" *ngIf="userLoggedIn" style="float:right;right: 10px;top: 10px;" routerLink="/createOrder">CHECKOUT</button>
+  <button mat-raised-button  color="primary" *ngIf="!userLoggedIn" style="float:right;right: 10px;top: 10px;" routerLink="/register">Register</button>
+</div>

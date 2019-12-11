@@ -1,1 +1,59 @@
-<p>users works!</p>
+<app-header pageTitle="User profile settings" iconTitle="info" helpTitle="On this page you can change your profile credentials easily."></app-header>
+
+<div *ngIf="dataLoading">
+        <mat-progress-spinner mode="indeterminate" [attr.color]="primary" [value]="15"></mat-progress-spinner>
+</div>
+  
+        <div class="card">
+                <img src="assets/images/no-user-image-icon-10.jpg" alt="John" style="width:100%">
+                <h1>{{user.name}}</h1>
+                <p class="title">{{user.email}}</p>
+                <p> Role: {{role}}</p>
+                <a href="#"><i class="fa fa-dribbble"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-linkedin"></i></a>
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <p class="btn-wrapper"><button (click)="showDetails()" *ngIf="!showUser && !updateAllowed">Update</button></p>
+        </div>
+        <div *ngIf="!showUser else showDetail">
+                <p style="text-align: center">Click on 'Update' to change your credentials.</p> 
+        </div>
+        <ng-template #showDetail>
+                Please enter valid values for password.
+                <!-- {{user.name}}
+                {{user.password}} -->
+                <form #formData='ngForm' (ngSubmit)="checkPassword(formData)">
+                <mat-card-actions >
+                        <button mat-raised-button color="warn" (click)="showUser=!showUser">Cancel</button>
+                </mat-card-actions>  
+                <mat-form-field>
+                        <input matInput placeholder="Enter your current password" type="password" name="password" #password="ngModel" ngModel required style="text-align: center;">
+                </mat-form-field><br>
+                <mat-card-actions >
+                        <button type="submit" [disabled]="!formData.valid" mat-raised-button color="primary">Next</button>
+                </mat-card-actions> 
+                </form>
+        </ng-template>
+<div *ngIf="updateAllowed" style="margin-top: 20px;margin-bottom: 20px;text-align: center;">
+             <h4>Please, enter new credentials.</h4>
+        <form #formData2='ngForm' (ngSubmit)="updateUser(formData2)">
+                <!-- <mat-card-actions align="start">
+                        <button mat-raised-button color="warn" (click)="showUser=!showUser">Cancel</button>
+                </mat-card-actions>   -->
+                <mat-form-field class="example-full-width">
+                        <input matInput placeholder="New email" type="text" name="email" #email="ngModel" ngModel required email style="text-align: center;">
+                </mat-form-field><br>
+                <mat-form-field class="example-full-width">
+                        <input matInput placeholder="New password" type="password" name="password" #password="ngModel" ngModel required minlength="5" style="text-align: center;">
+                </mat-form-field><br>
+                <mat-form-field class="example-full-width">
+                         <input matInput placeholder="Enter new password again" type="password" name="retyped_password" #retyped_password="ngModel" ngModel required minlength="5" style="text-align: center;">
+                </mat-form-field><br>
+                <mat-card-actions align="start">
+                        <button type="submit" [disabled]="!formData2.valid" mat-raised-button color="primary">Update</button>
+                </mat-card-actions> 
+        </form>
+</div>
+<mat-error *ngIf="error">
+        {{errorMessage}}
+</mat-error>  
